@@ -1,12 +1,12 @@
 pipeline {
    agent any
    environment {
-          SMART_CHECK_SERVER="dssc.bryceindustries.net"
-          AWS_REGION="us-east-2"
-          SCAN_REGISTRY="650143975734.dkr.ecr.us-east-2.amazonaws.com"
-          SCAN_REPOSITORY="web-app"
-          SMART_CHECK_CREDS=credentials('smart_check_jaws_world')
-          AWS=credentials('ecr_aws')
+          SMART_CHECK_SERVER=""
+          AWS_REGION=""
+          SCAN_REGISTRY=""
+          SCAN_REPOSITORY=""
+          SMART_CHECK_CREDS=credentials('')
+          AWS=credentials('')
           SCAN_ID="xxx"
     }
     stages
