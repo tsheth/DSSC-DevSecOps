@@ -112,6 +112,20 @@ pipeline {
         {
             steps{
                 sh ("docker push $SCAN_REGISTRY/$JOB_BASE_NAME:latest")
+               script {
+					def remote = [:]
+					withCredentials([sshUserPrivateKey(credentialsId: 'docker-host', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+						 remote.user = userName
+						 remote.identityFile = identity
+						 remote.name = "web-server"
+						 remote.host = "<HOSTIP>"
+						 remote.allowAnyHosts = true
+						 sshCommand remote: remote, command: 'sudo docker login -u AWS -p "<key>" 650143975734.dkr.ecr.us-east-2.amazonaws.com'                 
+						 sshCommand remote: remote, command: 'sudo docker stop struts_app'
+						 sshCommand remote: remote, command: 'sudo docker rm struts_app'
+						 sshCommand remote: remote, command: 'sudo docker run -d -p 8080:80 --name struts_app 650143975734.dkr.ecr.us-east-2.amazonaws.com/stage3-webapp:latest'
+					}
+				}
             }
 
         }
